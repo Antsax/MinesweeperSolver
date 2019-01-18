@@ -33,5 +33,7 @@ As mentioned before, we would need to create an array for each square to detremi
 ## Sources
 
 [Minesweeper AI Guide](https://luckytoilet.wordpress.com/2012/12/23/2125/)
+
 [Thesis by David Becerra](https://dash.harvard.edu/bitstream/handle/1/14398552/BECERRA-SENIORTHESIS-2015.pdf?sequence=1)
+
 [Post by Magnus Hoff](https://magnushoff.com/minesweeper/)
