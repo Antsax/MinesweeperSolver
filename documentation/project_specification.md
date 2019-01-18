@@ -13,12 +13,12 @@ an understandable, two-dimensional board with it. An ArrayList can also be used 
 
 An algorithm that is able to correctly deduce which squares do not have mines and which ones do is the key for this program to work. We need to define an algorithm, that is able to read the number on each neighbouring square and then reveal mine-free squares that have still not been revealed. So, in general:
 
-1. Click on a random location on the map. If it's a mine, restart. Otherwise, continue
-2. Iterate through the neighbouring squares of the revealed one and determine, which squares is mine-free, and reveal them.
+1. At the start, click on a random location on the map. If it's a mine, restart. Otherwise, continue
+2. Iterate through the neighbouring squares of the revealed one and determine, which squares are mine-free, and reveal them.
 3. Select the next square to process. The process of choosing the next square is yet to be solved. 
 4. Go back to phase 2
 
-I am not aware of any algorithms that are spesifically suitable for this kind of problem or made directly for Minesweeper
+I am not aware of any algorithms that are specifically suitable for this kind of problem or made directly for Minesweeper
 
 ## Complexities
 
