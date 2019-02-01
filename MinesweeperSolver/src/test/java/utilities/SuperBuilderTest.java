@@ -1,4 +1,9 @@
-package game;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package utilities;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,11 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author antsax
  */
-public class GamefieldTest {
+public class SuperBuilderTest {
     
-    Gamefield testfield;
-    
-    public GamefieldTest() {
+    public SuperBuilderTest() {
     }
     
     @BeforeClass
@@ -28,15 +31,15 @@ public class GamefieldTest {
     
     @Before
     public void setUp() {
-        this.testfield = new Gamefield(10, 10, 15);
     }
     
     @After
     public void tearDown() {
     }
-    
-    @Test
-    public void classCreated() {
-        assertNotNull(testfield);
-    }
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
 }

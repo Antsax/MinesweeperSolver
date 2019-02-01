@@ -5,23 +5,17 @@ package game;
  * @author antsax
  */
 public class Square {
-    
+
     private boolean mine;
     private boolean checked;
-    private boolean flagged;
     private int value;
-    
+
     public Square(boolean mine, int value) {
         this.mine = mine;
         this.checked = false;
-        this.flagged = false;
         this.value = value;
     }
-    
-    public void flag() {
-        this.flagged = !this.flagged;
-    }
-    
+
     public boolean isChecked() {
         return checked;
     }
@@ -30,37 +24,32 @@ public class Square {
         return mine;
     }
 
-    public boolean isFlagged() {
-        return flagged;
-    }
-    
     public void check() {
         this.checked = true;
-        flagged = false;
     }
-    
+
     public void setMine() {
         this.mine = true;
     }
-    
+
     @Override
     public String toString() {
-        if (flagged) {
-            return "X";
+        if (isChecked() && !isMine()) {
+            return Integer.toString(value);
         }
         
-        if (mine) {
-            if (checked) {
-                return "O";
-            }
-            
+        if(isChecked() && isMine()) {
             return "*";
         }
         
-        return "#";
+        return "X";
     }
-    
+
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

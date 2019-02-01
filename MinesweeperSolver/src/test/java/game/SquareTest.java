@@ -45,10 +45,4 @@ public class SquareTest {
     public void valueIsCorrect() {
         assertEquals(square.getValue(), 3);
     }
-    
-    @Test
-    public void flagWorks() {
-        square.flag();
-        assertTrue(square.isFlagged());
-    }
 }

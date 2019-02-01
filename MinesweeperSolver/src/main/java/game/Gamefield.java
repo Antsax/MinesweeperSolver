@@ -1,6 +1,7 @@
 package game;
 
 import java.util.Random;
+import utilities.SuperBuilder;
 
 /**
  *
@@ -23,11 +24,18 @@ public class Gamefield {
         this.height = height;
     }
 
-    // Creates an array with squares
+    // Creates an array with squares and mines. In other word, creates the field
     public void generateField() {
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
                 squares[x][y] = new Square(false, 0);
+            }
+        }
+
+        generateMines();
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                countMines(squares[i][j], i, j);
             }
         }
     }
@@ -50,6 +58,23 @@ public class Gamefield {
 
     }
 
+    // Counts adjacent mines
+    public void countMines(Square square, int x, int y) {
+        int cnt = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i + x > -1 && i + x < getWidth() && j + y > -1 && j + y < getHeight()) {
+                    Square neighbour = squares[x+i][y+j];
+                    if (neighbour.isMine()) {
+                        cnt++;
+                    }
+                }
+            }
+        }
+
+        square.setValue(cnt);
+    }
+
     public int getWidth() {
         return width;
     }
@@ -65,7 +90,8 @@ public class Gamefield {
     // Prints the board
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        SuperBuilder builder = new SuperBuilder();
+        builder.append("\n");
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
                 builder.append(squares[x][y].toString());
