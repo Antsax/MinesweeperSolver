@@ -1,6 +1,6 @@
 # Weekly Report: 3
 
-## WHat I did
+## What I did
 
 My aim was to finish the game this week, which was a success. I left the UI side stand for now. Testing didn't process at all this week which was a dissapointment, but I didn't want to use my time testing. I focused on finishing the game. I also created my first algorithm (SuperBuilder), which heavily resembles StringBuilder. 
 
