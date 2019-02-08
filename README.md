@@ -5,7 +5,9 @@ This project is part of the University of Helsinki course "Data Structures Proje
 ## Documentation
 
 [Project Specification](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/project_specification.md)
+
 [Implemenataton](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/implementation.md)
+
 [Testing Document](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/testing.md)
 
 ### Weekly reports
