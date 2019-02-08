@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilities;
+package solver;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,11 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author antsax
  */
-public class SuperBuilderTest {
+public class BoardReaderTest {
     
-    SuperBuilder builder;
-    
-    public SuperBuilderTest() {
+    public BoardReaderTest() {
     }
     
     @BeforeClass
@@ -33,19 +31,15 @@ public class SuperBuilderTest {
     
     @Before
     public void setUp() {
-        this.builder = new SuperBuilder();
     }
     
     @After
     public void tearDown() {
     }
 
-
-    @Test
-    public void stringIsCorrect() {
-        String testi = "Testi testinen";
-        builder.append("Testi testinen");
-        
-        assertEquals(testi, builder.toString());
-    }
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
 }
