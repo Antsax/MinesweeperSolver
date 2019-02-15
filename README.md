@@ -16,3 +16,4 @@ This project is part of the University of Helsinki course "Data Structures Proje
 * [2. week](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/weeklyReports/weeklyReport2.md)
 * [3. week](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/weeklyReports/weeklyReport3.md)
 * [4. week](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/weeklyReports/weeklyReport4.md)
+* [5. week](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/weeklyReports/weeklyReport5.md)

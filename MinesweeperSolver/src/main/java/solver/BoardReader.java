@@ -62,7 +62,7 @@ public class BoardReader {
             for (int j = -1; j <= 1; j++) {
                 if (i + x > -1 && i + x < width && j + y > -1 && j + y < height) {
                     Square neighbour = grid[x + i][y + j];
-                    if (!neighbour.isChecked()) {
+                    if (!neighbour.isChecked() && !neighbour.isFlagged()) {
                         cnt++;
                     }
                 }
@@ -101,7 +101,7 @@ public class BoardReader {
             for (int j = -1; j <= 1; j++) {
                 if (i + x > -1 && i + x < width && j + y > -1 && j + y < height) {
                     Square neighbour = grid[x + i][y + j];
-                    if (neighbour.isChecked()) {
+                    if (neighbour.isChecked() || neighbour.isFlagged()) {
                         return true;
                     }
                 }

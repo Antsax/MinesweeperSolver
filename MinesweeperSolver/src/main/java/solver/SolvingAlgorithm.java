@@ -64,12 +64,33 @@ public class SolvingAlgorithm {
                     }
                 }
             }
+            
+            //lastStageSolver();
         } catch (Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-
     }
+
+   /* public void lastStageSolver() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (reader.getSquare(x, y).getValue() > 0 && reader.getSquare(x, y).isChecked()) {
+                    solveSingle(x, y);
+                }
+            }
+        }
+        
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                    reader.getSquare(x, y).flag();
+            }
+        }
+        
+        reader.checkVictory();
+    }
+*/
+
 
     public void solveSingle(int x, int y) {
         int countClosed = reader.countUnopenedSquaresAround(x, y);

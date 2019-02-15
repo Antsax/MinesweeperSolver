@@ -16,12 +16,14 @@ public class Inspector {
     private int width;
     private int height;
     private boolean somethingChanged;
+    private int unopenedSquares;
 
     public Inspector(Square squares[][], int width, int height) {
         this.squares = squares;
         this.width = width;
         this.height = height;
         this.somethingChanged = false;
+        this.unopenedSquares = width * height;
     }
 
     public void reveal(int x, int y) {
@@ -29,6 +31,7 @@ public class Inspector {
             Square square = squares[x][y];
             if (!square.isChecked() && !square.isFlagged()) {
                 square.check();
+                unopenedSquares -= 1;
                 setChange(true);
                 if (square.isMine()) {
                     gameLost();
@@ -61,7 +64,7 @@ public class Inspector {
                 }
             }
         }
-        if (count == mines) {
+        if (count == mines && unopenedSquares == mines) {
             System.out.println("You won! Congratulations");
             printBoard();
             System.exit(0);

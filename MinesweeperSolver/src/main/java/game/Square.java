@@ -36,12 +36,13 @@ public class Square {
     }
 
     public void flag() {
-        if (!isChecked()) {
-            if (flagged == false) {
+        if (!isChecked() && flagged == false) {
+            /*if (flagged == false) {
                 flagged = true;
             } else {
                 flagged = false;
-            }
+            }*/
+            flagged = true;
         }
     }
 
