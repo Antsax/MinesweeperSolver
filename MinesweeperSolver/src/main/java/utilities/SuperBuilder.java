@@ -16,6 +16,10 @@ public class SuperBuilder {
     }
     
     //Appends strings
+    public void append(Character app) {
+        this.complete = this.complete + app;
+    }
+    
     public void append(String app) {
         this.complete = this.complete + app;
     }

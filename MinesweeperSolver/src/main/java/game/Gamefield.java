@@ -29,13 +29,15 @@ public class Gamefield {
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
                 squares[x][y] = new Square(false, 0);
+                squares[x][y].x = x;
+                squares[x][y].y = y;
             }
         }
 
         generateMines();
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {
-                countMines(squares[i][j], i, j);
+                setValue(squares[i][j], i, j);
             }
         }
     }
@@ -58,13 +60,13 @@ public class Gamefield {
 
     }
 
-    // Counts adjacent mines
-    public void countMines(Square square, int x, int y) {
+    // Set value for each square
+    public void setValue(Square square, int x, int y) {
         int cnt = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i + x > -1 && i + x < getWidth() && j + y > -1 && j + y < getHeight()) {
-                    Square neighbour = squares[x+i][y+j];
+                    Square neighbour = squares[x + i][y + j];
                     if (neighbour.isMine()) {
                         cnt++;
                     }
@@ -86,12 +88,15 @@ public class Gamefield {
     public Square[][] getSquares() {
         return squares;
     }
+    
+    public int getMines() {
+        return mines;
+    }
 
     // Prints the board
     @Override
     public String toString() {
         SuperBuilder builder = new SuperBuilder();
-        builder.append("\n");
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
                 builder.append(squares[x][y].toString());

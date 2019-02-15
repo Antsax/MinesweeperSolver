@@ -1,5 +1,6 @@
 package game;
 
+import solver.SolvingAlgorithm;
 import ui.*;
 
 /**
@@ -18,25 +19,34 @@ public class Main {
         asker.askMines();
 
         Gamefield game = new Gamefield(asker.getX(), asker.getY(), asker.getMines());
-        
-        //GUI visual = new GUI(asker.getX(), asker.getY());
 
         game.generateField();
-        
+
+        //GUI visual = new GUI(asker.getX(), asker.getY());
         System.out.println(game.toString());
-        
-        Inspector inspector = new  Inspector(game.getSquares(), game.getWidth(), game.getHeight());
+
+        Inspector inspector = new Inspector(game.getSquares(), game.getWidth(), game.getHeight());
 
         GameConsole console = new GameConsole(game.getWidth(), game.getHeight());
-        while (true) {
-            console.start();
-            
-            //visual.clickBoard(console.getX(), console.getY());
-            
-            inspector.reveal(console.getX(), console.getY());
-            inspector.checkVictory(asker.getMines());
-            
-            System.out.println(game.toString());
+
+        SolvingAlgorithm solver = new SolvingAlgorithm(inspector, game.getSquares(), asker.getX(), asker.getY(), game);
+
+        if (asker.askSolver()) {
+            solver.solve();
+        } else {
+            while (true) {
+                console.start();
+
+                //visual.clickBoard(console.getX(), console.getY());
+                if (!console.getF()) {
+                    inspector.reveal(console.getX(), console.getY());
+                } else {
+                    inspector.flagSquare(console.getX(), console.getY());
+                }
+
+                System.out.println(game.toString());
+                inspector.checkVictory(asker.getMines());
+            }
         }
     }
 

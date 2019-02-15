@@ -1,5 +1,7 @@
 package game;
 
+import utilities.SuperBuilder;
+
 /**
  *
  * @author antsax
@@ -13,21 +15,21 @@ public class Inspector {
     private Square squares[][];
     private int width;
     private int height;
-    private int uncheckedSquares;
+    private boolean somethingChanged;
 
     public Inspector(Square squares[][], int width, int height) {
         this.squares = squares;
         this.width = width;
         this.height = height;
-        this.uncheckedSquares = width * height;
+        this.somethingChanged = false;
     }
 
     public void reveal(int x, int y) {
         if (x < width && y < height) {
             Square square = squares[x][y];
-            if (!square.isChecked()) {
+            if (!square.isChecked() && !square.isFlagged()) {
                 square.check();
-                uncheckedSquares -= 1;
+                setChange(true);
                 if (square.isMine()) {
                     gameLost();
                 } else if (square.getValue() == 0) {
@@ -37,9 +39,31 @@ public class Inspector {
         }
     }
 
+    public void setChange(boolean value) {
+        somethingChanged = value;
+    }
+
+    public boolean informChange() {
+        return somethingChanged;
+    }
+
+    public void flagSquare(int x, int y) {
+        setChange(true);
+        squares[x][y].flag();
+    }
+
     public void checkVictory(int mines) {
-        if (mines == uncheckedSquares) {
+        int count = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if(squares[x][y].isMine() && squares[x][y].isFlagged()) {
+                    count++;
+                }
+            }
+        }
+        if (count == mines) {
             System.out.println("You won! Congratulations");
+            printBoard();
             System.exit(0);
         }
     }
@@ -60,5 +84,19 @@ public class Inspector {
                 }
             }
         }
+    }
+
+    public void printBoard() {
+        SuperBuilder builder = new SuperBuilder();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                builder.append(squares[x][y].toString());
+                builder.append(" ");
+            }
+
+            builder.append("\n");
+        }
+
+        System.out.println(builder.toString());
     }
 }

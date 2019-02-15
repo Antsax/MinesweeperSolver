@@ -38,6 +38,16 @@ public class Asker {
             mines = x*y - 1;
         }
     }
+    
+    public boolean askSolver() {
+        System.out.println("Would you like for the algorithm to solve the game? Y/N");
+        String answer = reader.nextLine();
+        if (answer.equals("Y")) {
+            return true;
+        }
+        
+        return false;
+    }
 
     public int getX() {
         return x;
