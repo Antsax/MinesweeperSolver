@@ -28,7 +28,7 @@ public class Gamefield {
     public void generateField() {
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
-                squares[x][y] = new Square(false, 0);
+                squares[x][y] = new Square(false, 0, x, y);
                 squares[x][y].x = x;
                 squares[x][y].y = y;
             }

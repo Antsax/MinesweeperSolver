@@ -5,6 +5,7 @@ import game.Inspector;
 import game.Square;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class SolvingAlgorithm {
 
@@ -28,10 +29,31 @@ public class SolvingAlgorithm {
     }
 
     public void solve() {
-        reader.reveal(width / 2, height / 2);
+        /* reader.reveal(width / 2, height / 2);
         reader.reveal(width - 2, height - 2);
         reader.reveal(width / 4, height / 4);
         reader.reveal(width / 6, height / 6);
+         */
+
+        // Our algorithm functions best, when it reveals a location that has a value of 0, so it will reveal other squares
+        // around it and give the algorithm more info to work with. For this reason, at the start of the game we will provide
+        // it with the location of a square that has a value of 0. This will only occur in the beginning and will not be
+        // implemented later. If this functionality wasn't provided, the algorithm would have to randomly check squares
+        // until a suitable candidate was found. This works, but it takes too much time and we have to restart the game
+        // too many times
+        boolean found = false;
+        for (int x = 0; x < width; x++) {
+            if (found) {
+                break;
+            }
+            for (int y = 0; y < height; y++) {
+                if (reader.getSquare(x, y).getTrueValue() == 0) {
+                    reader.reveal(x, y);
+                    found = true;
+                    break;
+                }
+            }
+        }
 
         try {
             int reruns = 0;
@@ -58,13 +80,13 @@ public class SolvingAlgorithm {
 
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
-                        if (reader.getSquare(x, y).getValue() > 0 /*&& reader.getSquare(x, y).isChecked()*/) {
+                        if (reader.getSquare(x, y).getValue() > 0) {
                             solveSingle(x, y);
                         }
                     }
                 }
             }
-            
+
             //lastStageSolver();
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -72,7 +94,7 @@ public class SolvingAlgorithm {
         }
     }
 
-   /* public void lastStageSolver() {
+    /* public void lastStageSolver() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (reader.getSquare(x, y).getValue() > 0 && reader.getSquare(x, y).isChecked()) {
@@ -89,9 +111,7 @@ public class SolvingAlgorithm {
         
         reader.checkVictory();
     }
-*/
-
-
+     */
     public void solveSingle(int x, int y) {
         int countClosed = reader.countUnopenedSquaresAround(x, y);
         if (countClosed == 0) {
@@ -186,7 +206,7 @@ public class SolvingAlgorithm {
             knownEmpty = new boolean[width][height];
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    knownEmpty[x][y] = tankBoard[x][y].getValue() >= 0;
+                    knownEmpty[x][y] = (tankBoard[x][y].getValue() >= 0);
                 }
             }
 
@@ -293,13 +313,14 @@ public class SolvingAlgorithm {
                     if (Math.abs(square.getX() - compareSquare.getX()) > 2 || Math.abs(square.getY() - compareSquare.getY()) > 2) {
                         isConnected = false;
                     } else {
-                        // Search all of the squaresfinishedRegion.conta
-                        for (int y = 0; y < height; y++) {
-                            for (int x = 0; x < width; x++) {
+                        // Search all of the squares
+                        squareSearch:
+                        for (int x = 0; x < width; x++) {
+                            for (int y = 0; y < height; y++) {
                                 if (reader.getSquare(x, y).getValue() > 0) {
                                     if (Math.abs(square.getX() - x) <= 1 && Math.abs(square.getY() - y) <= 1 && Math.abs(compareSquare.getX() - x) <= 1 && Math.abs(compareSquare.getY() - y) <= 1) {
                                         isConnected = true;
-                                        break;
+                                        break squareSearch;
                                     }
                                 }
                             }

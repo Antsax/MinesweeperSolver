@@ -15,10 +15,14 @@ public class Main {
 
     public static void main(String[] args) {
         Asker asker = new Asker();
-        asker.askSize();
-        asker.askMines();
+        //asker.askSize();
+        //asker.askMines();
+        
+        int w= 9;
+        int h = 9;
+        int mines = 10;
 
-        Gamefield game = new Gamefield(asker.getX(), asker.getY(), asker.getMines());
+        Gamefield game = new Gamefield(w, h, mines);
 
         game.generateField();
 
@@ -29,7 +33,7 @@ public class Main {
 
         GameConsole console = new GameConsole(game.getWidth(), game.getHeight());
 
-        SolvingAlgorithm solver = new SolvingAlgorithm(inspector, game.getSquares(), asker.getX(), asker.getY(), game);
+        SolvingAlgorithm solver = new SolvingAlgorithm(inspector, game.getSquares(), w, h, game);
 
         if (asker.askSolver()) {
             solver.solve();

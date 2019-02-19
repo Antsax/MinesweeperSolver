@@ -12,11 +12,13 @@ public class Square {
     private boolean flagged;
     int x, y;
 
-    public Square(boolean mine, int value) {
+    public Square(boolean mine, int value, int x, int y) {
         this.mine = mine;
         this.checked = false;
         this.value = value;
         this.flagged = false;
+        this.x = x;
+        this.y = y;
     }
 
     public boolean isChecked() {
@@ -55,6 +57,7 @@ public class Square {
         if (flagged) {
             return "P";
         }
+
         if (isChecked() && !isMine()) {
             return Integer.toString(value);
         }
@@ -63,10 +66,20 @@ public class Square {
             return "*";
         }
 
-        return "X";
+        return ".";
     }
 
     public int getValue() {
+        if (checked == true) {
+            return value;
+        } else {
+            return -1;
+        }
+    }
+    
+    
+    // Only use this for start of algorithm
+    public int getTrueValue() {
         return value;
     }
 

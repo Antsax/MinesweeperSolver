@@ -31,6 +31,7 @@ public class Inspector {
             Square square = squares[x][y];
             if (!square.isChecked() && !square.isFlagged()) {
                 square.check();
+                printBoard();
                 unopenedSquares -= 1;
                 setChange(true);
                 if (square.isMine()) {
@@ -47,7 +48,9 @@ public class Inspector {
     }
 
     public boolean informChange() {
-        return somethingChanged;
+        boolean toReturn = somethingChanged;
+        somethingChanged = false;
+        return toReturn;
     }
 
     public void flagSquare(int x, int y) {
