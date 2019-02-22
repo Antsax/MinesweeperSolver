@@ -14,9 +14,9 @@ public class SolvingAlgorithm {
     private int height;
     boolean borderoptimization;
     private ArrayList<boolean[]> tankSolutions;
-    private Square[][] tankBoard;
-    private boolean[][] knownMine;
-    private boolean[][] knownEmpty;
+    private Square[][] tankBoard = null;
+    private boolean[][] knownMine = null;
+    private boolean[][] knownEmpty = null;
     private int mines;
     private Gamefield game;
 
@@ -66,6 +66,7 @@ public class SolvingAlgorithm {
                     reruns = 0;
                     triedTank = false;
                 } else {
+                    reader.didBoardChange();
                     if (reruns < 3) {
                         reruns++;
                     } else {
@@ -206,7 +207,7 @@ public class SolvingAlgorithm {
             knownEmpty = new boolean[width][height];
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    knownEmpty[x][y] = (tankBoard[x][y].getValue() >= 0);
+                    knownEmpty[x][y] = tankBoard[x][y].getValue() >= 0;
                 }
             }
 
@@ -258,7 +259,7 @@ public class SolvingAlgorithm {
                 }
                 if (nEmpty > maxEmpty) {
                     maxEmpty = nEmpty;
-                    iEmpty = 1;
+                    iEmpty = i;
                 }
             }
 
@@ -296,7 +297,7 @@ public class SolvingAlgorithm {
                 }
             }
 
-            if (!queue.isEmpty()) {
+            if (queue.isEmpty()) {
                 break;
             }
 
@@ -389,7 +390,7 @@ public class SolvingAlgorithm {
         // We have found a solution
         if (depth == borderSquares.size()) {
 
-            // If mine count is incorrect, we don't have a soltuion
+            // If mine count is incorrect, we don't have a solution
             if (!borderoptimization && flagCount < mines) {
                 return;
             }

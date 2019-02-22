@@ -39,11 +39,11 @@ public class Square {
 
     public void flag() {
         if (!isChecked() && flagged == false) {
-            /*if (flagged == false) {
+            if (flagged == false) {
                 flagged = true;
             } else {
                 flagged = false;
-            }*/
+            }
             flagged = true;
         }
     }
@@ -76,8 +76,7 @@ public class Square {
             return -1;
         }
     }
-    
-    
+
     // Only use this for start of algorithm
     public int getTrueValue() {
         return value;

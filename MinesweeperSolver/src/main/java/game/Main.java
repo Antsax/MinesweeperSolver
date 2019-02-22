@@ -18,9 +18,9 @@ public class Main {
         //asker.askSize();
         //asker.askMines();
         
-        int w= 9;
-        int h = 9;
-        int mines = 10;
+        int w= 30;
+        int h = 16;
+        int mines = 99;
 
         Gamefield game = new Gamefield(w, h, mines);
 

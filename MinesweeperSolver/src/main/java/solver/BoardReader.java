@@ -50,7 +50,7 @@ public class BoardReader {
     public void reveal(int x, int y) {
         cursor.reveal(x, y);
     }
-    
+
     public boolean didBoardChange() {
         return cursor.informChange();
     }
@@ -62,13 +62,28 @@ public class BoardReader {
             for (int j = -1; j <= 1; j++) {
                 if (i + x > -1 && i + x < width && j + y > -1 && j + y < height) {
                     Square neighbour = grid[x + i][y + j];
-                    if (!neighbour.isChecked()) {
+                    if (!neighbour.isChecked() && !neighbour.isFlagged()) {
                         cnt++;
                     }
                 }
             }
         }
         return cnt;
+    }
+
+    public boolean areNeighbours(Square s, Square t) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i + s.getX() > -1 && i + s.getX() < width && j + s.getY() > -1 && j + s.getY() < height) {
+                    Square neighbour = grid[s.getX() + i][s.getY() + j];
+                    if (neighbour.getX() == t.getX() && neighbour.getY() == t.getY()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
     }
 
     // Count the flagged tiles around a specific location
@@ -93,7 +108,7 @@ public class BoardReader {
 
     // A boundry square is an unrevelaed square with revelaed squares around it
     public boolean isBoundry(int x, int y) {
-        if (grid[x][y].isChecked()) {
+        if (grid[x][y].isChecked() || grid[x][y].isFlagged()) {
             return false;
         }
 
@@ -101,7 +116,7 @@ public class BoardReader {
             for (int j = -1; j <= 1; j++) {
                 if (i + x > -1 && i + x < width && j + y > -1 && j + y < height) {
                     Square neighbour = grid[x + i][y + j];
-                    if (neighbour.getValue() >= 0) {
+                    if (neighbour.getValue() >= 0 || neighbour.isFlagged()) {
                         return true;
                     }
                 }

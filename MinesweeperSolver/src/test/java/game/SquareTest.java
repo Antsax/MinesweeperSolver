@@ -28,7 +28,7 @@ public class SquareTest {
     
     @Before
     public void setUp() {
-        this.square = new Square(false, 3);
+        this.square = new Square(false, 3, 5, 5);
     }
     
     @After
@@ -43,6 +43,6 @@ public class SquareTest {
     
     @Test
     public void valueIsCorrect() {
-        assertEquals(square.getValue(), 3);
+        assertEquals(square.getValue(), -1);
     }
 }
