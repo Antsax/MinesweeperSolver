@@ -3,9 +3,8 @@ package solver;
 import game.Gamefield;
 import game.Inspector;
 import game.Square;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
+import utilities.SuperList;
 
 public class SolvingAlgorithm {
 
@@ -13,7 +12,7 @@ public class SolvingAlgorithm {
     private int width;
     private int height;
     boolean borderoptimization;
-    private ArrayList<boolean[]> tankSolutions;
+    private SuperList<boolean[]> tankSolutions;
     private Square[][] tankBoard = null;
     private boolean[][] knownMine = null;
     private boolean[][] knownEmpty = null;
@@ -142,8 +141,8 @@ public class SolvingAlgorithm {
     }
 
     public void tankSolver() {
-        ArrayList<Square> borderSquares = new ArrayList<>();
-        ArrayList<Square> allEmptyBlocks = new ArrayList<>();
+        SuperList<Square> borderSquares = new SuperList<>();
+        SuperList<Square> allEmptyBlocks = new SuperList<>();
 
         // Endgame situation. If there are only few squares left, don't check border tiles
         borderoptimization = false;
@@ -178,9 +177,9 @@ public class SolvingAlgorithm {
         }
 
         // Segregation routine. Don't run during endgame.
-        ArrayList<ArrayList<Square>> segregated;
+        SuperList<SuperList<Square>> segregated;
         if (!borderoptimization) {
-            segregated = new ArrayList<>();
+            segregated = new SuperList<>();
             segregated.add(borderSquares);
         } else {
             segregated = tankSegregate(borderSquares);
@@ -194,7 +193,7 @@ public class SolvingAlgorithm {
 
         for (int currentSquareID = 0; currentSquareID < segregated.size(); currentSquareID++) {
             // Copy everything into temporary constructs
-            tankSolutions = new ArrayList<>();
+            tankSolutions = new SuperList<>();
             tankBoard = reader.getGrid().clone();
 
             knownMine = new boolean[width][height];
@@ -212,7 +211,7 @@ public class SolvingAlgorithm {
             }
 
             // Compute solutions
-            tankRecurse(segregated.get(currentSquareID), 0);
+            tankRecurse((SuperList<Square>) segregated.get(currentSquareID), 0);
 
             // Something went wrong
             if (tankSolutions.isEmpty()) {
@@ -223,7 +222,8 @@ public class SolvingAlgorithm {
             for (int i = 0; i < segregated.get(currentSquareID).size(); i++) {
                 boolean allMine = true;
                 boolean allEmpty = true;
-                for (boolean[] sln : tankSolutions) {
+                for (int b = 0; b<tankSolutions.size(); b++) {
+                    boolean[] sln = (boolean[]) tankSolutions.get(b);
                     if (!sln[i]) {
                         allMine = false;
                     }
@@ -252,7 +252,8 @@ public class SolvingAlgorithm {
             int iEmpty = -1;
             for (int i = 0; i < segregated.get(currentSquareID).size(); i++) {
                 int nEmpty = 0;
-                for (boolean[] sln : tankSolutions) {
+                for (int b = 0; b<tankSolutions.size(); b++) {
+                    boolean[] sln = (boolean[]) tankSolutions.get(b);
                     if (!sln[i]) {
                         nEmpty++;
                     }
@@ -281,16 +282,17 @@ public class SolvingAlgorithm {
         reader.reveal(s.getX(), s.getY());
     }
 
-    private ArrayList<ArrayList<Square>> tankSegregate(ArrayList<Square> borderSquares) {
-        ArrayList<ArrayList<Square>> allRegions = new ArrayList<>();
-        ArrayList<Square> checked = new ArrayList<>();
+    private SuperList<SuperList<Square>> tankSegregate(SuperList<Square> borderSquares) {
+        SuperList<SuperList<Square>> allRegions = new SuperList<>();
+        SuperList<Square> checked = new SuperList<>();
 
         while (true) {
-            LinkedList<Square> queue = new LinkedList<>();
-            ArrayList<Square> finishedRegion = new ArrayList<>();
+            SuperList<Square> queue = new SuperList<>();
+            SuperList<Square> finishedRegion = new SuperList<>();
 
             //Choose a point from where to start
-            for (Square firstS : borderSquares) {
+            for (int i = 0; i < borderSquares.size(); i++) {
+                Square firstS = (Square) borderSquares.get(i);
                 if (!checked.contains(firstS)) {
                     queue.add(firstS);
                     break;
@@ -302,11 +304,12 @@ public class SolvingAlgorithm {
             }
 
             while (!queue.isEmpty()) {
-                Square square = queue.poll();
+                Square square = (Square) queue.poll();
                 finishedRegion.add(square);
                 checked.add(square);
 
-                for (Square compareSquare : borderSquares) {
+                for (int i = 0; i < borderSquares.size(); i++) {
+                    Square compareSquare = (Square) borderSquares.get(i);
                     boolean isConnected = false;
                     if (finishedRegion.contains(compareSquare)) {
                         continue;
@@ -344,7 +347,7 @@ public class SolvingAlgorithm {
         return allRegions;
     }
 
-    private void tankRecurse(ArrayList<Square> borderSquares, int depth) {
+    private void tankRecurse(SuperList<Square> borderSquares, int depth) {
         // Return if at this point, it's already inconsistent
 
         int flagCount = 0;
@@ -397,7 +400,7 @@ public class SolvingAlgorithm {
 
             boolean[] solution = new boolean[borderSquares.size()];
             for (int i = 0; i < borderSquares.size(); i++) {
-                Square square = borderSquares.get(i);
+                Square square = (Square) borderSquares.get(i);
                 solution[i] = knownMine[square.getX()][square.getY()];
             }
 
@@ -405,7 +408,7 @@ public class SolvingAlgorithm {
             return;
         }
 
-        Square square = borderSquares.get(depth);
+        Square square = (Square) borderSquares.get(depth);
 
         // Recurse two positions: mine and no mine
         knownMine[square.getX()][square.getY()] = true;

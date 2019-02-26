@@ -12,7 +12,7 @@ public class Gamefield {
 
     private final Square[][] squares;
     private boolean started;
-    private final int mines;
+    private int mines;
     private final int height;
     private final int width;
 
@@ -34,7 +34,7 @@ public class Gamefield {
             }
         }
 
-        generateMines();
+        generateMinesFisherYates(squares);
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {
                 setValue(squares[i][j], i, j);
@@ -43,21 +43,30 @@ public class Gamefield {
     }
 
     // Puts mines in the field
-    public void generateMines() {
-        if (mines != 0) {
-            Random rng = new Random();
-            for (int n = 0; n < mines; n++) {
-                while (true) {
-                    int x = rng.nextInt(getWidth());
-                    int y = rng.nextInt(getHeight());
-                    if (!squares[x][y].isMine()) {
-                        squares[x][y].setMine();
-                        break;
-                    }
+    // Generate mines using Fisher-Yates shuffle
+    // Current time complexity is O(mines)
+    public void generateMinesFisherYates(Square[][] array) {
+        Random random = new Random();
+
+        for (int i = width; i > 0; i--) {
+            if (mines == 0) {
+                break;
+            }
+            for (int j = height; j > 0; j--) {
+                int m = random.nextInt(i + 1);
+                int n = random.nextInt(j + 1);
+                
+                Square temp = array[i][j];
+                array[i][j] = array[m][n];
+                array[m][n] = temp;
+                array[i][j].setMine();
+                
+                mines--;
+                if (mines == 0) {
+                    break;
                 }
             }
         }
-
     }
 
     // Set value for each square
@@ -88,7 +97,7 @@ public class Gamefield {
     public Square[][] getSquares() {
         return squares;
     }
-    
+
     public int getMines() {
         return mines;
     }
