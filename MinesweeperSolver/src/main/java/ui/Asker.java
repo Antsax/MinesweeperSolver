@@ -6,6 +6,8 @@ import java.util.Scanner;
  *
  * @author antsax
  */
+
+// The asker asks the user at the start of the game about desired values. They are width, height and amount of mines.
 public class Asker {
 
     Scanner reader = new Scanner(System.in);
@@ -13,6 +15,7 @@ public class Asker {
     private int y = 9;
     private int mines = 10;
 
+    // Ask the width and height
     public void askSize() {
         System.out.println("How many squares would you like the grid to have by width? \nDefault: 9 \nRange: 8-? \n(leave this blank if you prefer default)\n");
         String answer = reader.nextLine();
@@ -27,6 +30,7 @@ public class Asker {
         }
     }
 
+    // Ask how many mines
     public void askMines() {
         System.out.println("\nHow many mines would you prefer? \nDefault: 10 \nRange: 0 - [(width * height) - 1]  \n(leave this blank if you prefer default) \n");
         String answer3 = reader.nextLine();
@@ -39,6 +43,7 @@ public class Asker {
         }
     }
     
+    // Ask if the user wants the solver to solve the game
     public boolean askSolver() {
         System.out.println("Would you like for the algorithm to solve the game? Y/N");
         String answer = reader.nextLine();

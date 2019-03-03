@@ -11,18 +11,21 @@ public class GameConsole {
 
     private int x;
     private int y;
-    private static Scanner reader = new Scanner(System.in);
+    private static Scanner reader;
     private int width;
     private int height;
     private boolean f;
 
+    // The console requires width w and height h parameters to determine, if we can interact with the board
+    // when given the coordinate values.
     public GameConsole(int w, int h) {
         this.width = w;
         this.height = h;
         x = 100000;
         y = 100000;
         this.f = false;
-        
+        this.reader = new Scanner(System.in);
+
     }
 
 // The start() method will question the user on which square it wants to interact with
@@ -31,6 +34,7 @@ public class GameConsole {
         String answer = reader.nextLine();
         System.out.println("");
 
+        // if the answer contains the letter "f", then flag the location
         if (answer.contains("f")) {
             f = true;
             int index = answer.indexOf(',');
@@ -58,6 +62,8 @@ public class GameConsole {
             } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                 System.out.println("y not a number or poor input, try again.");
             }
+
+            // if the answer is not empty, then reveal the location.
         } else if (!answer.isEmpty()) {
             int index = answer.indexOf(',');
             String x = answer.substring(0, index);
@@ -84,7 +90,7 @@ public class GameConsole {
             } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                 System.out.println("y not a number or poor input, try again.");
             }
-        }
+        } // didn't type anything
         else {
             System.out.print("Blank, try again. \n");
         }
@@ -97,7 +103,8 @@ public class GameConsole {
     public int getY() {
         return y;
     }
-    
+
+    // tells if the last command was flagging
     public boolean getF() {
         boolean realF = f;
         f = false;

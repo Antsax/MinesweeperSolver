@@ -5,7 +5,7 @@ package utilities;
  * @author antsax
  */
 
-// A class designed to append strings together and print out the desired compilation
+// A class designed to append strings together and print out the desired compilation. Very much like a StringBuilder
 
 public class SuperBuilder {
     

@@ -6,6 +6,7 @@ import game.Square;
 import java.util.Random;
 import utilities.SuperList;
 
+// The solving algorithm which solves the game of Minesweeper
 public class SolvingAlgorithm {
 
     private BoardReader reader;
@@ -19,20 +20,15 @@ public class SolvingAlgorithm {
     private int mines;
     private Gamefield game;
 
-    public SolvingAlgorithm(Inspector cursor, Square grid[][], int width, int height, Gamefield game) {
-        this.reader = new BoardReader(grid, cursor, width, height, game);
-        this.width = width;
-        this.height = height;
+    public SolvingAlgorithm(Inspector cursor, Square grid[][], Gamefield game) {
+        this.reader = new BoardReader(grid, cursor, game);
+        this.width = game.getWidth();
+        this.height = game.getHeight();
         this.mines = game.getMines();
         this.game = game;
     }
 
     public void solve() {
-        /* reader.reveal(width / 2, height / 2);
-        reader.reveal(width - 2, height - 2);
-        reader.reveal(width / 4, height / 4);
-        reader.reveal(width / 6, height / 6);
-         */
 
         // Our algorithm functions best, when it reveals a location that has a value of 0, so it will reveal other squares
         // around it and give the algorithm more info to work with. For this reason, at the start of the game we will provide
@@ -87,31 +83,13 @@ public class SolvingAlgorithm {
                 }
             }
 
-            //lastStageSolver();
         } catch (Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
     }
-
-    /* public void lastStageSolver() {
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if (reader.getSquare(x, y).getValue() > 0 && reader.getSquare(x, y).isChecked()) {
-                    solveSingle(x, y);
-                }
-            }
-        }
-        
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                    reader.getSquare(x, y).flag();
-            }
-        }
-        
-        reader.checkVictory();
-    }
-     */
+    
+    // Solve a single square
     public void solveSingle(int x, int y) {
         int countClosed = reader.countUnopenedSquaresAround(x, y);
         if (countClosed == 0) {
@@ -140,6 +118,7 @@ public class SolvingAlgorithm {
         }
     }
 
+    // Tanksolver, our main solving algorithm.
     public void tankSolver() {
         SuperList<Square> borderSquares = new SuperList<>();
         SuperList<Square> allEmptyBlocks = new SuperList<>();
@@ -282,6 +261,7 @@ public class SolvingAlgorithm {
         reader.reveal(s.getX(), s.getY());
     }
 
+    // Segregated areas. This makes our algorithm faster, as we only need to check individual areas.
     private SuperList<SuperList<Square>> tankSegregate(SuperList<Square> borderSquares) {
         SuperList<SuperList<Square>> allRegions = new SuperList<>();
         SuperList<Square> checked = new SuperList<>();
@@ -347,6 +327,7 @@ public class SolvingAlgorithm {
         return allRegions;
     }
 
+    // See if everything checks. If it does, continue on with the algorithm.
     private void tankRecurse(SuperList<Square> borderSquares, int depth) {
         // Return if at this point, it's already inconsistent
 

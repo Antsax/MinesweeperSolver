@@ -5,6 +5,7 @@ import game.Inspector;
 import game.Square;
 import java.util.Random;
 
+// Acts as middleman for the solving algorithm to read the board and interact with it.
 public class BoardReader {
 
     private Square grid[][];
@@ -15,24 +16,26 @@ public class BoardReader {
     private boolean[][] flags; //All flags in the map
     private Gamefield game;
 
-    public BoardReader(Square field[][], Inspector reader, int width, int height, Gamefield game) {
+    public BoardReader(Square field[][], Inspector reader, Gamefield game) {
         this.grid = field;
-        this.width = width;
-        this.height = height;
+        this.width = game.getWidth();
+        this.height = game.getHeight();
         this.cursor = reader;
         this.rng = new Random();
         this.flags = null;
         this.game = game;
     }
 
+    // Return the board
     public Square[][] getGrid() {
         return grid;
     }
 
-    public void gameStart() {
-        cursor.reveal(width / 2, height / 2);
-    }
-
+    // Reveals  all tiles around a square
+    /**
+     * @param x as x-coordinate
+     * @param y as y-coordinate
+     */
     public void revealAround(int x, int y) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -43,14 +46,17 @@ public class BoardReader {
         }
     }
 
+    // Check if the game has been won
     public void checkVictory() {
         cursor.checkVictory(game.getMines());
     }
 
+    // Reveal a square
     public void reveal(int x, int y) {
         cursor.reveal(x, y);
     }
 
+    // Checks if any changes have occured on the board
     public boolean didBoardChange() {
         return cursor.informChange();
     }
@@ -71,6 +77,7 @@ public class BoardReader {
         return cnt;
     }
 
+    // See if two squares are neigbours
     public boolean areNeighbours(Square s, Square t) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -82,7 +89,7 @@ public class BoardReader {
                 }
             }
         }
-        
+
         return false;
     }
 

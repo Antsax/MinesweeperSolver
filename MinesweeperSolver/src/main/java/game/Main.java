@@ -15,29 +15,33 @@ public class Main {
 
     public static void main(String[] args) {
         Asker asker = new Asker();
-        //asker.askSize();
-        //asker.askMines();
         
-        int w= 30;
-        int h = 16;
-        int mines = 99;
+        // Ask the user for the size of the board and amount of mines
+        asker.askSize();
+        asker.askMines();
+        
+        Gamefield game = new Gamefield(asker.getX(), asker.getY(), asker.getMines());
 
-        Gamefield game = new Gamefield(w, h, mines);
-
+        // Generate the field
         game.generateField();
 
         //GUI visual = new GUI(asker.getX(), asker.getY());
-        System.out.println(game.toString());
+        
+        // Reveal the location of the mines. This will only happen in the beginning of the game.
+        // This is done so the user may see the difficulty of the game and if the algorithim truly 
+        // solves it. 
+        System.out.println(game.showMines());
 
         Inspector inspector = new Inspector(game.getSquares(), game.getWidth(), game.getHeight());
-
         GameConsole console = new GameConsole(game.getWidth(), game.getHeight());
+        SolvingAlgorithm solver = new SolvingAlgorithm(inspector, game.getSquares(), game);
 
-        SolvingAlgorithm solver = new SolvingAlgorithm(inspector, game.getSquares(), w, h, game);
-
+        // Ask if you want for the algorithim to solve the game. 
         if (asker.askSolver()) {
             solver.solve();
         } else {
+            
+            // Player wants to solve the game by themselves
             while (true) {
                 console.start();
 

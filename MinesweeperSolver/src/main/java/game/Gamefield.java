@@ -7,7 +7,7 @@ import utilities.SuperBuilder;
  *
  * @author antsax
  */
-// The logical aspect of the game
+// The logical aspect of the game. Generates the field, the mines and gives values of the game.
 public class Gamefield {
 
     private final Square[][] squares;
@@ -16,6 +16,7 @@ public class Gamefield {
     private final int height;
     private final int width;
 
+    // Pretty straightforward
     public Gamefield(int width, int height, int mines) {
         this.squares = new Square[width][height];
         this.started = false;
@@ -33,8 +34,11 @@ public class Gamefield {
                 squares[x][y].y = y;
             }
         }
-
+        
+        // Once the field has been created, put the mines in
         generateMinesFisherYates(squares);
+        
+        // Give each square its proper value
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {
                 setValue(squares[i][j], i, j);
@@ -47,22 +51,23 @@ public class Gamefield {
     // Current time complexity is O(mines)
     public void generateMinesFisherYates(Square[][] array) {
         Random random = new Random();
+        int tempMines = mines;
 
-        for (int i = width; i > 0; i--) {
-            if (mines == 0) {
+        for (int i = width - 1; i > 0; i--) {
+            if (tempMines == 0) {
                 break;
             }
-            for (int j = height; j > 0; j--) {
-                int m = random.nextInt(i + 1);
-                int n = random.nextInt(j + 1);
-                
+            for (int j = height - 1; j > 0; j--) {
+                int m = random.nextInt(i);
+                int n = random.nextInt(j);
+
                 Square temp = array[i][j];
                 array[i][j] = array[m][n];
                 array[m][n] = temp;
-                array[i][j].setMine();
-                
-                mines--;
-                if (mines == 0) {
+                array[m][n].setMine();
+
+                tempMines--;
+                if (tempMines == 0) {
                     break;
                 }
             }
@@ -94,10 +99,12 @@ public class Gamefield {
         return height;
     }
 
+    // Returns the gamefield
     public Square[][] getSquares() {
         return squares;
     }
 
+    // Returns the amount of mines
     public int getMines() {
         return mines;
     }
@@ -110,6 +117,26 @@ public class Gamefield {
             for (int x = 0; x < getWidth(); x++) {
                 builder.append(squares[x][y].toString());
                 builder.append(" ");
+            }
+
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
+    // Prints the board but with the mines revealed.
+    public String showMines() {
+        SuperBuilder builder = new SuperBuilder();
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                if (squares[x][y].isMine()) {
+                    builder.append("X");
+                    builder.append(" ");
+                } else {
+                    builder.append(squares[x][y].toString());
+                    builder.append(" ");
+                }
             }
 
             builder.append("\n");
