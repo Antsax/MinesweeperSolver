@@ -41,5 +41,5 @@ I chose not to count the time it took for it solve each stage, as my algorithm i
 
 The amount of mines amounts to 15% of the map.
 
-[Image of graph](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/graph.jpg)
+![Image of graph](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/graph.jpg)
 
