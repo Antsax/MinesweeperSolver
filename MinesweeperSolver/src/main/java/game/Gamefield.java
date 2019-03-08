@@ -27,6 +27,7 @@ public class Gamefield {
 
     // Creates an array with squares and mines. In other word, creates the field
     public void generateField() {
+        long timeBeginning = System.currentTimeMillis();
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
                 squares[x][y] = new Square(false, 0, x, y);
@@ -44,6 +45,8 @@ public class Gamefield {
                 setValue(squares[i][j], i, j);
             }
         }
+        long timeEnding = System.currentTimeMillis();
+        System.out.println("It took " + (timeEnding - timeBeginning) + " ms to generate the map");
     }
 
     // Puts mines in the field
