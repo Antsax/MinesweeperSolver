@@ -10,6 +10,8 @@ This project is part of the University of Helsinki course "Data Structures Proje
 
 [Testing Document](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/testing.md)
 
+[User manual](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/guide.md)
+
 ### Weekly reports
 
 * [1. week](https://github.com/Antsax/MinesweeperSolver/blob/master/documentation/weeklyReports/weeklyReport1.md)
