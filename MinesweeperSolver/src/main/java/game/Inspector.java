@@ -17,6 +17,7 @@ public class Inspector {
     private int height;
     private boolean somethingChanged;
     private int unopenedSquares;
+    long timeBeginning;
 
     public Inspector(Square squares[][], int width, int height) {
         this.squares = squares;
@@ -24,21 +25,25 @@ public class Inspector {
         this.height = height;
         this.somethingChanged = false; // Boolean value that tells if the board has changed (flagged, mine exploded, square revelead etc.)
         this.unopenedSquares = width * height;
+        this.timeBeginning = 0;
     }
 
     // Reveal a particular location of the map.
     public void reveal(int x, int y) {
-        
+
+        if (timeBeginning == 0) {
+             timeBeginning = System.currentTimeMillis();
+        }
         // Check if the coordinates are within borders
         if (x < width && y < height) {
             Square square = squares[x][y];
-            
+
             // Reveal only, if the square hasn't been flagged or revealed
             if (!square.isChecked() && !square.isFlagged()) {
                 square.check();
                 printBoard();
                 unopenedSquares -= 1;
-                
+
                 // The board has changed
                 setChange(true);
                 if (square.isMine()) {
@@ -73,15 +78,17 @@ public class Inspector {
         int count = 0;
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if(squares[x][y].isMine() && squares[x][y].isFlagged()) {
+                if (squares[x][y].isMine() && squares[x][y].isFlagged()) {
                     count++;
                 }
             }
         }
-        
+
         if (count == mines && unopenedSquares == mines) {
             System.out.println("You won! Congratulations");
             printBoard();
+            long timeEnding = System.currentTimeMillis();
+            System.out.println("It took me " + (timeEnding - timeBeginning) + " ms to solve this");
             System.exit(0);
         }
     }
@@ -106,7 +113,7 @@ public class Inspector {
             }
         }
     }
-    
+
     // Prints the board                                     
     public void printBoard() {
         SuperBuilder builder = new SuperBuilder();

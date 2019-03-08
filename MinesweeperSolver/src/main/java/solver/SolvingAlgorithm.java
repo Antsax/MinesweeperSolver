@@ -88,7 +88,7 @@ public class SolvingAlgorithm {
             e.printStackTrace();
         }
     }
-    
+
     // Solve a single square
     public void solveSingle(int x, int y) {
         int countClosed = reader.countUnopenedSquaresAround(x, y);
@@ -201,7 +201,7 @@ public class SolvingAlgorithm {
             for (int i = 0; i < segregated.get(currentSquareID).size(); i++) {
                 boolean allMine = true;
                 boolean allEmpty = true;
-                for (int b = 0; b<tankSolutions.size(); b++) {
+                for (int b = 0; b < tankSolutions.size(); b++) {
                     boolean[] sln = (boolean[]) tankSolutions.get(b);
                     if (!sln[i]) {
                         allMine = false;
@@ -231,7 +231,7 @@ public class SolvingAlgorithm {
             int iEmpty = -1;
             for (int i = 0; i < segregated.get(currentSquareID).size(); i++) {
                 int nEmpty = 0;
-                for (int b = 0; b<tankSolutions.size(); b++) {
+                for (int b = 0; b < tankSolutions.size(); b++) {
                     boolean[] sln = (boolean[]) tankSolutions.get(b);
                     if (!sln[i]) {
                         nEmpty++;

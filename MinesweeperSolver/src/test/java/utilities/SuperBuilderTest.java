@@ -42,6 +42,11 @@ public class SuperBuilderTest {
 
 
     @Test
+    public void builderExists() {
+        assertNotNull(builder);
+    }
+    
+    @Test
     public void stringIsCorrect() {
         String testi = "Testi testinen";
         builder.append("Testi testinen");
